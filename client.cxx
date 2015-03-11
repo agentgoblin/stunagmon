@@ -25,12 +25,12 @@ void
 usage()
 {
    cerr << "Usage:" << endl
-	<< "    ./client stunServerHostname [testNumber] [-v] [-p srcPort] [-i nicAddr1] [-i nicAddr2] [-i nicAddr3]" << endl
-	<< "For example, if the STUN server was larry.gloo.net, you could do:" << endl
-	<< "    ./client larry.gloo.net" << endl
-	<< "The testNumber is just used for special tests." << endl
-	<< " test 1 runs test 1 from the RFC. For example:" << endl
-	<< "    ./client larry.gloo.net 0" << endl << endl
+    << "    ./client stunServerHostname [testNumber] [-v] [-p srcPort] [-i nicAddr1] [-i nicAddr2] [-i nicAddr3]" << endl
+    << "For example, if the STUN server was larry.gloo.net, you could do:" << endl
+    << "    ./client larry.gloo.net" << endl
+    << "The testNumber is just used for special tests." << endl
+    << " test 1 runs test 1 from the RFC. For example:" << endl
+    << "    ./client larry.gloo.net 0" << endl << endl
         << endl;
 }
 
@@ -80,6 +80,8 @@ main(int argc, char* argv[])
       {
          verbose = true;
       }
+      // set interfaces
+      // this shit not work as man says
       else if ( !strcmp( argv[arg] , "-i" ) )
       {
          arg++;
@@ -97,6 +99,9 @@ main(int argc, char* argv[])
 
          stunParseServerName(argv[arg], sAddr[numNic++]);
       }
+      // end of set interfaces
+
+      // set source port
       else if ( !strcmp( argv[arg] , "-p" ) )
       {
          arg++;
@@ -107,6 +112,8 @@ main(int argc, char* argv[])
          }
          srcPort = strtol( argv[arg], NULL, 10);
       }
+      // end of set source port
+
       else
       {
         char* ptr;
@@ -126,7 +133,7 @@ main(int argc, char* argv[])
               usage();
               exit(-1);
            }
-	}
+        }
       }
    }
    // =========== End argument parsing
@@ -151,7 +158,8 @@ main(int argc, char* argv[])
          usage();
          exit(-1);
       }
-
+    // TEST 0 START
+    // Test NAT type
       if (testNum==0)
       {
          bool presPort=false;
@@ -173,16 +181,16 @@ main(int argc, char* argv[])
          {
             case StunTypeFailure:
                cout << "Some stun error detetecting NAT type";
-	       retval[nic] = -1;
+           retval[nic] = -1;
                exit(-1);
                break;
             case StunTypeUnknown:
                cout << "Some unknown type error detetecting NAT type";
-	       retval[nic] = 0xEE;
+           retval[nic] = 0xEE;
                break;
             case StunTypeOpen:
                cout << "Open";
-	       retval[nic] = 0x00;
+           retval[nic] = 0x00;
                break;
             case StunTypeIndependentFilter:
                cout << "Independent Mapping, Independent Filter";
@@ -234,6 +242,10 @@ main(int argc, char* argv[])
              retval[nic] |= 0x01;
          }
       }
+      // TEST 0 END
+
+      // TEST 100 START
+      //
       else if (testNum==100)
       {
          Socket myFd = openPort(srcPort,sAddr[nic].addr,verbose);
@@ -279,6 +291,10 @@ main(int argc, char* argv[])
 #endif
          }
       }
+      // TEST 100 END
+
+      // TEST -2 START
+      // Get some ports and test it for open pairs via STUN
       else if (testNum==-2)
       {
          const int numPort = 5;
@@ -298,6 +314,10 @@ main(int argc, char* argv[])
             closesocket(fd[i]);
          }
       }
+      // TEST -2 END
+
+      // TEST -1 START
+      // Test for opening socket ports pair via STUN
       else if (testNum==-1)
       {
          int fd3,fd4;
@@ -321,8 +341,11 @@ main(int argc, char* argv[])
             cerr << "Opened a stun socket pair FAILED" << endl;
          }
       }
+      // TEST -1 END
+
       else
       {
+          //this shit test stun and print mapped address:port
          stunTest( stunServerAddr,testNum,verbose,&(sAddr[nic]) );
       }
    } // end of for loop
