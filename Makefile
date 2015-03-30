@@ -1,6 +1,5 @@
 
-
-TARS= client.cxx  stun_check.cxx  stun.h udp.cxx  udp.h \
+TARS= client.cxx stun_check.cxx stun_check.h stun.h udp.cxx udp.h \
 	Makefile rfc3489.txt
 
 # if you chnage this version, change in stun.h too 
@@ -41,6 +40,6 @@ libstun.a: stun.o udp.o
 	co $@
 
 # Dependancies
-stun_check.o: stun.h udp.h 
+stun_check.o: stun.h udp.h stun_check.h
 stun.o: stun.h udp.h
 udp.o: stun.h udp.h 
