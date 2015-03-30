@@ -116,57 +116,6 @@ int main(int argc, char* argv[])
         << "verbose  " << verbose << endl \
         << "srcPort  " << srcPort << endl;
 
-       /* OLD ARG PARSING START
-      // Get interfaces for test PIECE OF SHIT
-      if ( !strcmp( argv[arg] , "-i" ) )
-      {
-         arg++;
-         if ( argc <= arg )
-         {
-            usage();
-            exit(-1);
-         }
-         if ( numNic >= MAX_NIC )
-         {
-            cerr << "Can not have more than "<<  MAX_NIC <<" -i options" << endl;
-            usage();
-            exit(-1);
-         }
-
-         stunParseServerName(argv[arg], sAddr[numNic++]);
-      }
-      else if ( !strcmp( argv[arg] , "-p" ) )
-      {
-         arg++;
-         if ( argc <= arg )
-         {
-            usage();
-            exit(-1);
-         }
-         srcPort = strtol( argv[arg], NULL, 10);
-      }
-      else
-      {
-        char* ptr;
-        int t =  strtol( argv[arg], &ptr, 10 );
-        if ( *ptr == 0 )
-        {
-           // conversion worked
-           testNum = t;
-           cout << "running test number " << testNum  << endl;
-        }
-        else
-        {
-           bool ret = stunParseServerName( argv[arg], stunServerAddr);
-           if ( ret != true )
-           {
-              cerr << argv[arg] << " is not a valid host name " << endl;
-              usage();
-              exit(-1);
-           }
-        }
-      }
-      * OLD ARG PARSING END*/
 
 
     exit(prcOK);
