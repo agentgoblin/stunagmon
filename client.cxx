@@ -119,13 +119,13 @@ main(int argc, char* argv[])
         char* ptr;
         int t =  strtol( argv[arg], &ptr, 10 );
         if ( *ptr == 0 )
-        {
+        { // set test number
            // conversion worked
            testNum = t;
            cout << "running test number " << testNum  << endl;
-        }
+        } //end of set test number
         else
-        {
+        { //set server name
            bool ret = stunParseServerName( argv[arg], stunServerAddr);
            if ( ret != true )
            {
@@ -133,6 +133,7 @@ main(int argc, char* argv[])
               usage();
               exit(-1);
            }
+           //end of set server name
         }
       }
    }

@@ -116,7 +116,31 @@ int main(int argc, char* argv[])
         << "verbose  " << verbose << endl \
         << "srcPort  " << srcPort << endl;
 
+    /* Test server */
+    int fd1,fd2;
+    StunAddress4 mappedAddr;
+    StunAddress4 srcAddr;
+    srcAddr.addr = 0;
 
+    bool ok = stunOpenSocketPair(stunServerAddr,
+                                    &mappedAddr,
+                                    &fd1,
+                                    &fd2,
+                                    srcPort,
+                                    &srcAddr,
+                                    verbose);
+    if ( ok )
+    {
+        closesocket(fd1);
+        closesocket(fd2);
+        cout << "Got port pair at " << mappedAddr.port << endl;
+        exit(prcOK);
+    }
+    else
+    {
+        cerr << "Opened a stun socket pair FAILED" << endl;
+        exit(prcCritical);
+    }
 
     exit(prcOK);
 }
