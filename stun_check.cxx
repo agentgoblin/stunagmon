@@ -39,28 +39,6 @@ int main(int argc, char* argv[])
     // Verbose mode
     bool verbose = false;
 
-
-    // VVVVV DELETE THIS
-
-    // Network interfaces
-    // but resolve to 127.0.0.1:65535
-    /*
-    const int MAX_NIC = 3;
-    StunAddress4 sAddr[MAX_NIC];
-    int retval[MAX_NIC];
-    int numNic=0;
-
-    // Network interfaces addresses
-    // fill zeros ips and ports
-    for ( int i=0; i<MAX_NIC; i++ )
-    {
-        sAddr[i].addr=0;
-        sAddr[i].port=0;
-        retval[i]=0;
-    }
-    * */
-    // ^^^^^ DELETE THIS
-
     /* Check for arguments */
     if ( argc == 1 )
     {
@@ -110,11 +88,14 @@ int main(int argc, char* argv[])
     }
 
     /*debug*/
-    cout << "stunServerAddr  " << stunServerAddr << endl \
-        << "stunServerAddr.addr  " << stunServerAddr.addr << endl \
-        << "stunServerAddr.port  " << stunServerAddr.port << endl \
-        << "verbose  " << verbose << endl \
-        << "srcPort  " << srcPort << endl;
+    if ( verbose )
+    {
+        cout << "stunServerAddr  " << stunServerAddr << endl \
+            << "stunServerAddr.addr  " << stunServerAddr.addr << endl \
+            << "stunServerAddr.port  " << stunServerAddr.port << endl \
+            << "verbose  " << verbose << endl \
+            << "srcPort  " << srcPort << endl;
+    }
 
     /* Test server */
     int fd1,fd2;
@@ -138,7 +119,8 @@ int main(int argc, char* argv[])
     }
     else
     {
-        cerr << "Opened a stun socket pair FAILED" << endl;
+        /* cout because Nagios cannot into cerr*/
+        cout << "Opened a stun socket pair FAILED" << endl;
         exit(prcCritical);
     }
 

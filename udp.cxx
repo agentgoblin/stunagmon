@@ -147,20 +147,24 @@ getMessage( Socket fd, char* buf, int* len,
       switch (err)
       {
          case ENOTSOCK:
-            cerr << "Error fd not a socket" <<   endl;
+            /* cout because Nagios cannot into cerr*/
+            cout << "Error fd not a socket" << endl;
             break;
          case ECONNRESET:
-            cerr << "Error connection reset - host not reachable" <<   endl;
+            /* cout because Nagios cannot into cerr*/
+            cout << "Error connection reset - host not reachable" << endl;
             break;
 
         // VVVVVVV MYCODE
         case EAGAIN:
-            cerr << "Reached timeout" << endl;
+            /* cout because Nagios cannot into cerr*/
+            cout << "Reached timeout" << endl;
             return false;
         // ^^^^^^^ MYCODE
 
          default:
-            cerr << "Socket Error=" << err << endl;
+            /* cout because Nagios cannot into cerr*/
+            cout << "Socket Error=" << err << endl;
       }
 
       return false;
@@ -185,7 +189,8 @@ getMessage( Socket fd, char* buf, int* len,
    {
       if (verbose)
       {
-         clog << "Received a message that was too large" << endl;
+            /* cout because Nagios cannot into clog*/
+            cout << "Received a message that was too large" << endl;
       }
       return false;
    }

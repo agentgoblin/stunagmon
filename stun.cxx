@@ -2400,7 +2400,8 @@ stunOpenSocketPair( StunAddress4& dest, StunAddress4* mapAddr,
         // VVVVVVV MYCODE
         if ( gmRet == false )
         {
-            cerr << "Reached timeout, stop test" << endl;
+            /* cout because Nagios cannot into cerr*/
+            cout << "Reached read socket timeout, stop test" << endl;
             return false;
         }
         // ^^^^^^^ MYCODE
